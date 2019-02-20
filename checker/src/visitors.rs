@@ -1189,6 +1189,8 @@ impl<'a, 'b: 'a, 'tcx: 'b, E> MirVisitor<'a, 'b, 'tcx, E> {
                 cond_as_bool = self.solve_condition(cond_val)
             }
             self.smt_solver.backtrack();
+        } else if entry_cond_as_bool.unwrap() && cond_as_bool.is_none() {
+            cond_as_bool = self.solve_condition(cond_val)
         }
         (cond_as_bool, entry_cond_as_bool)
     }
